@@ -1,0 +1,4 @@
+CFLAGS="${CFLAGS} -DARENA_MEM_DBG -DARENA_EXTRA"
+LIBS="${LIBS} -lm"
+
+OBJS="arena/arena.o"
