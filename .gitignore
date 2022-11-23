@@ -1,0 +1,3 @@
+.redo
+build/*
+!build/default.o.do
