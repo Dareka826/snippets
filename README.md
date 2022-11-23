@@ -1,6 +1,6 @@
 # Rin's Snippets
 
-A collection of files that don't deserve their own repos, but are useful nonethelesa.
+A collection of files that don't deserve their own repos, but are useful nonetheless.
 
 What's inside (may not be exhaustive):
 - An implementation for an arena allocator in C99
