@@ -15,7 +15,7 @@ Arena* create_arena() { /*{{{*/
     memset(ap, 0, sizeof(Arena));
 
 #ifdef ARENA_MEM_DBG
-    fprintf(stderr, C_GREEN"[MEM] "C_YELLOW"malloc: "C_RESET" %p\n", ap);
+    fprintf(stderr, C_GREEN"[MEM]"C_YELLOW" malloc:"C_RESET" %p\n", ap);
 #endif
 
     return ap;
@@ -30,12 +30,12 @@ void free_arena(Arena *ap) { /*{{{*/
         next = head->next;
 
 #ifdef ARENA_MEM_DBG
-        fprintf(stderr, C_GREEN"[MEM] "C_BLUE"free: "C_RESET" %p\n", head->ptr);
+        fprintf(stderr, C_GREEN"[MEM]"C_BLUE" free:"C_RESET" %p\n", head->ptr);
 #endif
         free(head->ptr);
 
 #ifdef ARENA_MEM_DBG
-        fprintf(stderr, C_GREEN"[MEM] "C_BLUE"free: "C_RESET" %p\n", head);
+        fprintf(stderr, C_GREEN"[MEM]"C_BLUE" free:"C_RESET" %p\n", head);
 #endif
         free(head);
 
@@ -43,7 +43,7 @@ void free_arena(Arena *ap) { /*{{{*/
     }
 
 #ifdef ARENA_MEM_DBG
-    fprintf(stderr, C_GREEN"[MEM] "C_BLUE"free: "C_RESET" %p\n", ap);
+    fprintf(stderr, C_GREEN"[MEM]"C_BLUE" free:"C_RESET" %p\n", ap);
 #endif
     free(ap);
 } /*}}}*/
@@ -54,13 +54,13 @@ void* arena_alloc(Arena *ap, size_t size) { /*{{{*/
     struct ArenaBuf *abp = malloc(sizeof(struct ArenaBuf));
 
 #ifdef ARENA_MEM_DBG
-    fprintf(stderr, C_GREEN"[MEM] "C_YELLOW"malloc: "C_RESET" %p\n", abp);
+    fprintf(stderr, C_GREEN"[MEM]"C_YELLOW" malloc:"C_RESET" %p\n", abp);
 #endif
 
     abp->ptr = malloc(size);
 
 #ifdef ARENA_MEM_DBG
-    fprintf(stderr, C_GREEN"[MEM] "C_YELLOW"malloc: "C_RESET" %p\n", abp->ptr);
+    fprintf(stderr, C_GREEN"[MEM]"C_YELLOW" malloc:"C_RESET" %p\n", abp->ptr);
 #endif
 
     abp->next = ap->head;
@@ -73,13 +73,13 @@ void* arena_alloc0(Arena *ap, size_t size) { /*{{{*/
     struct ArenaBuf *abp = malloc(sizeof(struct ArenaBuf));
 
 #ifdef ARENA_MEM_DBG
-    fprintf(stderr, C_GREEN"[MEM] "C_YELLOW"malloc: "C_RESET" %p\n", abp);
+    fprintf(stderr, C_GREEN"[MEM]"C_YELLOW" malloc:"C_RESET" %p\n", abp);
 #endif
 
     abp->ptr = calloc(1, size);
 
 #ifdef ARENA_MEM_DBG
-    fprintf(stderr, C_GREEN"[MEM] "C_YELLOW"calloc: "C_RESET" %p\n", abp->ptr);
+    fprintf(stderr, C_GREEN"[MEM]"C_YELLOW" calloc:"C_RESET" %p\n", abp->ptr);
 #endif
 
     abp->next = ap->head;
@@ -123,12 +123,12 @@ void arena_mid_free(Arena *ap, void *ptr) {
 
             // Free
 #ifdef ARENA_MEM_DBG
-        fprintf(stderr, C_GREEN"[MEM] "C_BLUE"free: "C_RESET" %p\n", head->ptr);
+        fprintf(stderr, C_GREEN"[MEM]"C_BLUE" free:"C_RESET" %p\n", head->ptr);
 #endif
         free(head->ptr);
 
 #ifdef ARENA_MEM_DBG
-        fprintf(stderr, C_GREEN"[MEM] "C_BLUE"free: "C_RESET" %p\n", head);
+        fprintf(stderr, C_GREEN"[MEM]"C_BLUE" free:"C_RESET" %p\n", head);
 #endif
         free(head);
 
