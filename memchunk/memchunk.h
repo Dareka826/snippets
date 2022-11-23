@@ -18,4 +18,6 @@ void memc_free(memc * const mp);
 
 void memc_bounds_check(memc const * const mp, size_t i);
 
+#define MP(type, mptr) ((type)(mptr->ptr))
+
 #endif
