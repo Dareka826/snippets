@@ -3,3 +3,6 @@
 -Wextra
 -Wconversion
 -Werror
+
+-DARENA_MEM_DBG
+-DARENA_EXTRA
