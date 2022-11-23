@@ -59,6 +59,8 @@ void* arena_alloc(Arena *ap, size_t size) { /*{{{*/
     #endif
 
     abp->ptr = malloc(size);
+    if (abp->ptr != NULL)
+        abp->size = size;
 
     #ifdef ARENA_MEM_DBG
     fprintf(stderr, C_GREEN"[MEM]"C_YELLOW" malloc:"C_RESET" %p\n", abp->ptr);
@@ -79,6 +81,8 @@ void* arena_alloc0(Arena *ap, size_t size) { /*{{{*/
     #endif
 
     abp->ptr = calloc(1, size);
+    if (abp->ptr != NULL)
+        abp->size = size;
 
     #ifdef ARENA_MEM_DBG
     fprintf(stderr, C_GREEN"[MEM]"C_YELLOW" calloc:"C_RESET" %p\n", abp->ptr);

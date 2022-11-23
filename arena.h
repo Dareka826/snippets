@@ -9,6 +9,7 @@ typedef  struct Arena  Arena;
 struct ArenaBuf {
     struct ArenaBuf *next;
     void *ptr;
+    size_t size;
 };
 
 // Arena allocator
