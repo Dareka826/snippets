@@ -151,7 +151,7 @@ void arena_mid_free(Arena *ap, void *ptr) { /*{{{*/
     }
 } /*}}}*/
 
-size_t arena_get_size(Arena *ap) {
+size_t arena_get_size(Arena *ap) { /*{{{*/
     struct ArenaBuf *head = ap->head;
     size_t size = 0;
 
@@ -161,9 +161,9 @@ size_t arena_get_size(Arena *ap) {
     }
 
     return size;
-}
+} /*}}}*/
 
-size_t arena_get_buffer_size(Arena *ap, void *ptr) {
+size_t arena_get_buffer_size(Arena *ap, void *ptr) { /*{{{*/
     struct ArenaBuf *head = ap->head;
 
     while (head != NULL) {
@@ -174,6 +174,6 @@ size_t arena_get_buffer_size(Arena *ap, void *ptr) {
     }
 
     return 0;
-}
+} /*}}}*/
 // }}}
 #endif
