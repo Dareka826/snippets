@@ -115,7 +115,7 @@ void* arena_xalloc0(Arena *ap, size_t size) { /*{{{*/
 
 #ifdef ARENA_EXTRA
 // Extra functions {{{
-void arena_mid_free(Arena *ap, void *ptr) {
+void arena_mid_free(Arena *ap, void *ptr) { /*{{{*/
     struct ArenaBuf
         *head = ap->head,
         *prev = NULL;
@@ -144,6 +144,31 @@ void arena_mid_free(Arena *ap, void *ptr) {
         prev = head;
         head = head->next;
     }
+} /*}}}*/
+
+size_t arena_get_size(Arena *ap) {
+    struct ArenaBuf *head = ap->head;
+    size_t size = 0;
+
+    while (head != NULL) {
+        size += head->size;
+        head = head->next;
+    }
+
+    return size;
+}
+
+size_t arena_get_buffer_size(Arena *ap, void *ptr) {
+    struct ArenaBuf *head = ap->head;
+
+    while (head != NULL) {
+        if (head->ptr == ptr)
+            return head->size;
+
+        head = head->next;
+    }
+
+    return 0;
 }
 // }}}
 #endif
