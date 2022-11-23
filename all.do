@@ -1,1 +1,3 @@
-redo-ifchange arena/test
+redo-ifchange \
+    arena/test \
+    memchunk/test
