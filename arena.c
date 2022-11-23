@@ -26,7 +26,7 @@ void _arena_mem_dbg_free(void const * const ptr) {
 
 // Init / Deinit {{{
 Arena* create_arena() { /*{{{*/
-    Arena *ap = malloc(sizeof(Arena));
+    Arena * const ap = malloc(sizeof(Arena));
     memset(ap, 0, sizeof(Arena));
 
     _arena_mem_dbg_alloc("malloc", ap);
@@ -34,7 +34,7 @@ Arena* create_arena() { /*{{{*/
     return ap;
 } /*}}}*/
 
-void free_arena(Arena *ap) { /*{{{*/
+void free_arena(Arena * const ap) { /*{{{*/
     struct ArenaBuf
         *head = ap->head,
         *next = NULL;
@@ -57,8 +57,8 @@ void free_arena(Arena *ap) { /*{{{*/
 // }}}
 
 // Allocate {{{
-void* arena_alloc(Arena *ap, size_t size) { /*{{{*/
-    struct ArenaBuf *abp = malloc(sizeof(struct ArenaBuf));
+void* arena_alloc(Arena * const ap, size_t size) { /*{{{*/
+    struct ArenaBuf * const abp = malloc(sizeof(struct ArenaBuf));
     memset(abp, 0, sizeof(struct ArenaBuf));
 
     _arena_mem_dbg_alloc("malloc", abp);
@@ -78,8 +78,8 @@ void* arena_alloc(Arena *ap, size_t size) { /*{{{*/
     return abp->ptr;
 } /*}}}*/
 
-void* arena_alloc0(Arena *ap, size_t size) { /*{{{*/
-    struct ArenaBuf *abp = malloc(sizeof(struct ArenaBuf));
+void* arena_alloc0(Arena * const ap, size_t size) { /*{{{*/
+    struct ArenaBuf * const abp = malloc(sizeof(struct ArenaBuf));
     memset(abp, 0, sizeof(struct ArenaBuf));
 
     _arena_mem_dbg_alloc("malloc", abp);
@@ -99,8 +99,8 @@ void* arena_alloc0(Arena *ap, size_t size) { /*{{{*/
     return abp->ptr;
 } /*}}}*/
 
-void* arena_xalloc(Arena *ap, size_t size) { /*{{{*/
-    void *p = arena_alloc(ap, size);
+void* arena_xalloc(Arena * const ap, size_t size) { /*{{{*/
+    void * const p = arena_alloc(ap, size);
 
     if (p == NULL)
         exit(1);
@@ -108,8 +108,8 @@ void* arena_xalloc(Arena *ap, size_t size) { /*{{{*/
     return p;
 } /*}}}*/
 
-void* arena_xalloc0(Arena *ap, size_t size) { /*{{{*/
-    void *p = arena_alloc0(ap, size);
+void* arena_xalloc0(Arena * const ap, size_t size) { /*{{{*/
+    void * const p = arena_alloc0(ap, size);
 
     if (p == NULL)
         exit(1);
@@ -120,7 +120,7 @@ void* arena_xalloc0(Arena *ap, size_t size) { /*{{{*/
 
 #ifdef ARENA_EXTRA
 // Extra functions {{{
-void arena_mid_free(Arena *ap, void *ptr) { /*{{{*/
+void arena_mid_free(Arena * const ap, void * const ptr) { /*{{{*/
     struct ArenaBuf
         *head = ap->head,
         *prev = NULL;
@@ -147,8 +147,8 @@ void arena_mid_free(Arena *ap, void *ptr) { /*{{{*/
     }
 } /*}}}*/
 
-size_t arena_get_size(Arena *ap) { /*{{{*/
-    struct ArenaBuf *head = ap->head;
+size_t arena_get_size(Arena const * const ap) { /*{{{*/
+    struct ArenaBuf const *head = ap->head;
     size_t size = 0;
 
     while (head != NULL) {
@@ -159,8 +159,8 @@ size_t arena_get_size(Arena *ap) { /*{{{*/
     return size;
 } /*}}}*/
 
-size_t arena_get_buffer_size(Arena *ap, void *ptr) { /*{{{*/
-    struct ArenaBuf *head = ap->head;
+size_t arena_get_buffer_size(Arena const * const ap, void const * const ptr) { /*{{{*/
+    struct ArenaBuf const *head = ap->head;
 
     while (head != NULL) {
         if (head->ptr == ptr)
