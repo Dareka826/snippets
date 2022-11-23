@@ -29,6 +29,7 @@ void* arena_alloc0(Arena*, size_t);
 #ifdef ARENA_EXTRA
 // Frees a single buffer from the list (for rare cases)
 void arena_mid_free(Arena*, void*);
+#define arena_mid_nfree(ap,ptr) do { arena_mid_free(ap, ptr); ptr = NULL; } while(0);
 #endif
 
 #endif
