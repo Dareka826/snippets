@@ -123,14 +123,14 @@ void arena_mid_free(Arena *ap, void *ptr) {
 
             // Free
 #ifdef ARENA_MEM_DBG
-        fprintf(stderr, C_GREEN"[MEM]"C_BLUE" free:"C_RESET" %p\n", head->ptr);
+            fprintf(stderr, C_GREEN"[MEM]"C_BLUE" free:"C_RESET" %p\n", head->ptr);
 #endif
-        free(head->ptr);
+            free(head->ptr);
 
 #ifdef ARENA_MEM_DBG
-        fprintf(stderr, C_GREEN"[MEM]"C_BLUE" free:"C_RESET" %p\n", head);
+            fprintf(stderr, C_GREEN"[MEM]"C_BLUE" free:"C_RESET" %p\n", head);
 #endif
-        free(head);
+            free(head);
 
             break;
         }
