@@ -87,6 +87,24 @@ void* arena_alloc0(Arena* ap, size_t bytes) { /*{{{*/
 
     return abp->ptr;
 } /*}}}*/
+
+void* arena_xalloc(Arena *ap, size_t size) { /*{{{*/
+    void *p = arena_alloc(ap, size);
+
+    if (p == NULL)
+        exit(1);
+
+    return p;
+} /*}}}*/
+
+void* arena_xalloc0(Arena *ap, size_t size) { /*{{{*/
+    void *p = arena_alloc0(ap, size);
+
+    if (p == NULL)
+        exit(1);
+
+    return p;
+} /*}}}*/
 // }}}
 
 #ifdef ARENA_EXTRA

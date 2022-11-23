@@ -28,6 +28,9 @@ void free_arena(Arena*);
 void* arena_alloc(Arena*, size_t);
 void* arena_alloc0(Arena*, size_t);
 
+void* arena_xalloc(Arena*, size_t);
+void* arena_xalloc0(Arena*, size_t);
+
 
 #ifdef ARENA_EXTRA
 // Frees a single buffer from the list (for rare cases)
