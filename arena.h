@@ -16,15 +16,18 @@ struct Arena {
     struct ArenaBuf *head;
 };
 
+
 // Init / Destroy
 Arena* create_arena();
 
 void free_arena(Arena*);
 #define nfree_arena(ptr) do { free_arena(ptr); ptr = NULL; } while(0);
 
+
 // Allocate
 void* arena_alloc(Arena*, size_t);
 void* arena_alloc0(Arena*, size_t);
+
 
 #ifdef ARENA_EXTRA
 // Frees a single buffer from the list (for rare cases)
