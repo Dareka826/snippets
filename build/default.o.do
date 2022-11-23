@@ -4,9 +4,9 @@ redo-ifchange ../config.rc
 . ../config.rc
 
 # Custom config
-if [ -f "${1%/*}/config.rc" ]; then
-    redo-ifchange "${1%/*}/config.rc"
-    . "${1%/*}/config.rc"
+if [ -f "../${1%/*}/config.rc" ]; then
+    redo-ifchange "../${1%/*}/config.rc"
+    . "../${1%/*}/config.rc"
 fi
 
 redo-ifchange "../${2}.c"
