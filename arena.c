@@ -21,7 +21,7 @@ Arena* create_arena() { /*{{{*/
     return ap;
 } /*}}}*/
 
-void free_arena(Arena* ap) { /*{{{*/
+void free_arena(Arena *ap) { /*{{{*/
     struct ArenaBuf
         *head = ap->head,
         *next = NULL;
@@ -50,14 +50,14 @@ void free_arena(Arena* ap) { /*{{{*/
 // }}}
 
 // Allocate {{{
-void* arena_alloc(Arena* ap, size_t bytes) { /*{{{*/
+void* arena_alloc(Arena *ap, size_t size) { /*{{{*/
     struct ArenaBuf *abp = malloc(sizeof(struct ArenaBuf));
 
 #ifdef ARENA_MEM_DBG
     fprintf(stderr, C_GREEN"[MEM] "C_YELLOW"malloc: "C_RESET" %p\n", abp);
 #endif
 
-    abp->ptr = malloc(bytes);
+    abp->ptr = malloc(size);
 
 #ifdef ARENA_MEM_DBG
     fprintf(stderr, C_GREEN"[MEM] "C_YELLOW"malloc: "C_RESET" %p\n", abp->ptr);
@@ -69,14 +69,14 @@ void* arena_alloc(Arena* ap, size_t bytes) { /*{{{*/
     return abp->ptr;
 } /*}}}*/
 
-void* arena_alloc0(Arena* ap, size_t bytes) { /*{{{*/
+void* arena_alloc0(Arena *ap, size_t size) { /*{{{*/
     struct ArenaBuf *abp = malloc(sizeof(struct ArenaBuf));
 
 #ifdef ARENA_MEM_DBG
     fprintf(stderr, C_GREEN"[MEM] "C_YELLOW"malloc: "C_RESET" %p\n", abp);
 #endif
 
-    abp->ptr = calloc(1, bytes);
+    abp->ptr = calloc(1, size);
 
 #ifdef ARENA_MEM_DBG
     fprintf(stderr, C_GREEN"[MEM] "C_YELLOW"calloc: "C_RESET" %p\n", abp->ptr);
