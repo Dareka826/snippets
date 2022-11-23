@@ -52,6 +52,7 @@ void free_arena(Arena *ap) { /*{{{*/
 // Allocate {{{
 void* arena_alloc(Arena *ap, size_t size) { /*{{{*/
     struct ArenaBuf *abp = malloc(sizeof(struct ArenaBuf));
+    memset(abp, 0, sizeof(struct ArenaBuf));
 
     #ifdef ARENA_MEM_DBG
     fprintf(stderr, C_GREEN"[MEM]"C_YELLOW" malloc:"C_RESET" %p\n", abp);
@@ -71,6 +72,7 @@ void* arena_alloc(Arena *ap, size_t size) { /*{{{*/
 
 void* arena_alloc0(Arena *ap, size_t size) { /*{{{*/
     struct ArenaBuf *abp = malloc(sizeof(struct ArenaBuf));
+    memset(abp, 0, sizeof(struct ArenaBuf));
 
     #ifdef ARENA_MEM_DBG
     fprintf(stderr, C_GREEN"[MEM]"C_YELLOW" malloc:"C_RESET" %p\n", abp);
