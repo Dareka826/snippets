@@ -1,5 +1,6 @@
 #include "arena.h"
 #include <stdlib.h>
+#include <string.h>
 #include <stdio.h>
 
 #ifdef ARENA_MEM_DBG
