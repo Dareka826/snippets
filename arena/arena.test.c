@@ -87,48 +87,38 @@ int main() {
         // Size {{{
         assert( arena_get_size(a) == 5+7+3+1 );
 
+        assert( a->head->size                   == 1  );
+        assert( a->head->next->size             == 3  );
+        assert( a->head->next->next->size       == 7  );
+        assert( a->head->next->next->next->size == 5  );
+
         assert( arena_get_buffer_size(a, p4) == 1 );
         assert( arena_get_buffer_size(a, p3) == 3 );
         assert( arena_get_buffer_size(a, p2) == 7 );
         assert( arena_get_buffer_size(a, p1) == 5 );
         // }}}
 
-        #ifdef ARENA_UNSAFE
-        // Mid-free {{{
-        assert( a->head->ptr                     == p4 );
-        assert( a->head->size                    == 1  );
-        assert( a->head->next->ptr               == p3 );
-        assert( a->head->next->size              == 3  );
-        assert( a->head->next->next->ptr         == p2 );
-        assert( a->head->next->next->size        == 7  );
-        assert( a->head->next->next->next->ptr   == p1 );
-        assert( a->head->next->next->next->size  == 5  );
-        assert( a->head->next->next->next->next  == NULL );
-
-        arena_mid_nfree(a, p2);
-        assert( p2 == NULL );
-
-        assert( a->head->ptr              == p4 );
-        assert( a->head->size             == 1  );
-        assert( a->head->next->ptr        == p3 );
-        assert( a->head->next->size       == 3  );
-        assert( a->head->next->next->ptr  == p1 );
-        assert( a->head->next->next->size == 5  );
-        assert( a->head->next->next->next == NULL );
-        // }}}
-
-        // Size after mid-free
-        assert( arena_get_size(a) == 5+3+1 );
-        #endif
-
         // Pop
         arena_pop(a);
 
+        assert( a->head->ptr              == p3 );
+        assert( a->head->next->ptr        == p2 );
+        assert( a->head->next->next->ptr  == p1 );
+        assert( a->head->next->next->next == NULL );
+
+        #ifdef ARENA_UNSAFE
+        // Mid-free {{{
+        arena_mid_nfree(a, p2);
+        assert( p2 == NULL );
+
         assert( a->head->ptr        == p3 );
-        assert( a->head->size       == 3  );
         assert( a->head->next->ptr  == p1 );
-        assert( a->head->next->size == 5  );
         assert( a->head->next->next == NULL );
+        // }}}
+
+        // Size after mid-free
+        assert( arena_get_size(a) == 5+3 );
+        #endif
 
         nfree_arena(a);
     } /*}}}*/
