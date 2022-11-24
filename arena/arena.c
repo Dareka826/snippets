@@ -10,17 +10,17 @@
 #define C_YELLOW "\033[33m"
 #define C_BLUE   "\033[34m"
 
-void _arena_mem_dbg_alloc(const char * const type, void const * const ptr) {
-    fprintf(stderr, C_GREEN"[MEM]"C_YELLOW" %s:"C_RESET" %p\n", type, ptr);
+void _arena_mem_dbg_alloc(const char * const type, void const * const ptr, const char * const reason) {
+    fprintf(stderr, C_GREEN"[MEM]"C_YELLOW" %s:"C_RESET" %p (%s)\n", type, ptr, reason);
 }
 
-void _arena_mem_dbg_free(void const * const ptr) {
-    fprintf(stderr, C_GREEN"[MEM]"C_BLUE" free:"C_RESET" %p\n", ptr);
+void _arena_mem_dbg_free(void const * const ptr, const char * const reason) {
+    fprintf(stderr, C_GREEN"[MEM]"C_BLUE" free:"C_RESET" %p (%s)\n", ptr, reason);
 }
 
 #else
-#define _arena_mem_dbg_alloc(type, ptr) do {} while (0)
-#define _arena_mem_dbg_free(ptr) do {} while (0)
+#define _arena_mem_dbg_alloc(type, ptr, rsn) do {} while (0)
+#define _arena_mem_dbg_free(ptr, rsn) do {} while (0)
 // }}}
 #endif
 
@@ -29,7 +29,7 @@ Arena* create_arena() { /*{{{*/
     Arena * const ap = malloc(sizeof(Arena));
     memset(ap, 0, sizeof(Arena));
 
-    _arena_mem_dbg_alloc("malloc", ap);
+    _arena_mem_dbg_alloc("malloc", ap, "arena init");
 
     return ap;
 } /*}}}*/
@@ -42,16 +42,16 @@ void free_arena(Arena * const ap) { /*{{{*/
     while (head != NULL) {
         next = head->next;
 
-        _arena_mem_dbg_free(head->ptr);
+        _arena_mem_dbg_free(head->ptr, "buffer data free");
         free(head->ptr);
 
-        _arena_mem_dbg_free(head);
+        _arena_mem_dbg_free(head, "buffer free");
         free(head);
 
         head = next;
     }
 
-    _arena_mem_dbg_free(ap);
+    _arena_mem_dbg_free(ap, "arena free");
     free(ap);
 } /*}}}*/
 // }}}
@@ -61,11 +61,11 @@ void* arena_alloc(Arena * const ap, size_t size) { /*{{{*/
     struct ArenaBuf * const abp = malloc(sizeof(struct ArenaBuf));
     memset(abp, 0, sizeof(struct ArenaBuf));
 
-    _arena_mem_dbg_alloc("malloc", abp);
+    _arena_mem_dbg_alloc("malloc", abp, "buffer init");
 
     abp->ptr = malloc(size);
 
-    _arena_mem_dbg_alloc("malloc", abp->ptr);
+    _arena_mem_dbg_alloc("malloc", abp->ptr, "buffer data init");
 
     #ifdef ARENA_EXTRA
     if (abp->ptr != NULL)
@@ -82,11 +82,11 @@ void* arena_alloc0(Arena * const ap, size_t size) { /*{{{*/
     struct ArenaBuf * const abp = malloc(sizeof(struct ArenaBuf));
     memset(abp, 0, sizeof(struct ArenaBuf));
 
-    _arena_mem_dbg_alloc("malloc", abp);
+    _arena_mem_dbg_alloc("malloc", abp, "buffer init");
 
     abp->ptr = calloc(1, size);
 
-    _arena_mem_dbg_alloc("calloc", abp->ptr);
+    _arena_mem_dbg_alloc("calloc", abp->ptr, "buffer data init");
 
     #ifdef ARENA_EXTRA
     if (abp->ptr != NULL)
@@ -133,10 +133,10 @@ void arena_mid_free(Arena * const ap, void * const ptr) { /*{{{*/
             else ap->head   = head->next;
 
             // Free
-            _arena_mem_dbg_free(head->ptr);
+            _arena_mem_dbg_free(head->ptr, "buffer data mid-free");
             free(head->ptr);
 
-            _arena_mem_dbg_free(head);
+            _arena_mem_dbg_free(head, "buffer mid-free");
             free(head);
 
             break;
