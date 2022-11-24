@@ -179,6 +179,20 @@ void arena_mid_free(Arena * const ap, void * const ptr) { /*{{{*/
 } /*}}}*/
 #endif
 
+void arena_pop(Arena * const ap) {
+    struct ArenaBuf * const b = ap->head;
+
+    if (b != NULL) {
+        ap->head = b->next;
+
+        _arena_mem_dbg_free(b->ptr, "buffer data pop free");
+        free(b->ptr);
+
+        _arena_mem_dbg_free(b, "buffer pop free");
+        free(b);
+    }
+}
+
 size_t arena_get_size(Arena const * const ap) { /*{{{*/
     struct ArenaBuf const *head = ap->head;
     size_t size = 0;
