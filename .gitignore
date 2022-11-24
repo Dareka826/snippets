@@ -1,4 +1,5 @@
 .redo
 build/*
-!build/default.o.do
+!build/*.do
 */test
+*/*.test
