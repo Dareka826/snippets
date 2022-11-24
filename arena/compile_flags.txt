@@ -4,6 +4,4 @@
 -Wconversion
 -Werror
 
--DARENA_MEM_DBG
 -DARENA_EXTRA
--DARENA_DBG_NAME
