@@ -1,4 +1,4 @@
-TESTS="arena"
+TESTS="arena memchunk"
 
 TESTS_SUCCEDEED=1
 for t in ${TESTS}; do
