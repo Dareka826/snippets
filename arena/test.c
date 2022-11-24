@@ -14,7 +14,7 @@ int main() {
     u32 x = 1234;
 
     {
-        Arena *a = create_arena();
+        Arena *a = create_arenan("a");
 
         char *buf = NULL;
         {

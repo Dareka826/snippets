@@ -15,13 +15,31 @@
 #define C_ALLOC C_YELLOW
 #define C_FREE  C_BLUE
 
-#define _arena_mem_dbg_alloc(type, ptr, reason) do {\
-    fprintf(stderr, C_MEM"[MEM]"C_ALLOC" %s:"C_RESET" %p (%s)\n", type, ptr, reason); \
-} while(0)
+#define _arena_mem_dbg_msg(fmt, ...) do { \
+    fprintf(stderr, C_MEM"[MEM] "C_RESET fmt "\n", ##__VA_ARGS__); \
+} while (0)
+
+#ifdef ARENA_DBG_NAME
+#define _arena_mem_dbg_alloc(type, ptr, reason) do { \
+    if (ap->name != NULL) \
+         _arena_mem_dbg_msg("\"%s\": "C_ALLOC"malloc:"C_RESET" %p (%s)", ap->name, ptr, reason); \
+    else _arena_mem_dbg_msg(C_ALLOC"malloc:"C_RESET" %p (%s)", ptr, reason); \
+} while (0)
+
+#define _arena_mem_dbg_free(ptr, reason) do { \
+    if (ap->name != NULL) \
+         _arena_mem_dbg_msg("\"%s\": "C_FREE"free:"C_RESET" %p (%s)", ap->name, ptr, reason); \
+    else _arena_mem_dbg_msg(C_FREE"free:"C_RESET" %p (%s)", ptr, reason); \
+} while (0)
+#else
+#define _arena_mem_dbg_alloc(type, ptr, reason) do { \
+    _arena_mem_dbg_msg(C_ALLOC"malloc:"C_RESET" %p (%s)", ap, "arena init"); \
+} while (0)
 
 #define _arena_mem_dbg_free(ptr, reason) do {\
-    fprintf(stderr, C_MEM"[MEM]"C_FREE" free:"C_RESET" %p (%s)\n", ptr, reason);\
-} while(0)
+    _arena_mem_dbg_msg(C_FREE"free:"C_RESET" %p (%s)", ptr, reason); \
+} while (0)
+#endif
 
 #else
 #define _arena_mem_dbg_alloc(type, ptr, rsn) do {} while (0)
@@ -38,6 +56,20 @@ Arena* create_arena() { /*{{{*/
 
     return ap;
 } /*}}}*/
+
+#if defined(ARENA_MEM_DBG) && defined(ARENA_DBG_NAME)
+Arena* create_arenan(const char * const name) { /*{{{*/
+    Arena * const ap = malloc(sizeof(Arena));
+    memset(ap, 0, sizeof(Arena));
+
+    if (name != NULL)
+        ap->name = name;
+
+    _arena_mem_dbg_alloc("malloc", ap, "arena init");
+
+    return ap;
+} /*}}}*/
+#endif
 
 void free_arena(Arena * const ap) { /*{{{*/
     struct ArenaBuf
