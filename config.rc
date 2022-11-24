@@ -10,5 +10,5 @@ if ! command -v clang >/dev/null; then
 fi
 
 # Compilation flags
-CFLAGS="-std=c99 -Wall -Wextra -Wconversion -Werror"
+CFLAGS="-O2 -std=c99 -Wall -Wextra -Wconversion -Werror"
 LIBS=""
