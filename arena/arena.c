@@ -6,17 +6,22 @@
 #ifdef ARENA_MEM_DBG
 // Memory allocation / free debug log {{{
 #define C_RESET  "\033[0m"
+#define C_RED    "\033[32m"
 #define C_GREEN  "\033[32m"
 #define C_YELLOW "\033[33m"
 #define C_BLUE   "\033[34m"
 
-void _arena_mem_dbg_alloc(const char * const type, void const * const ptr, const char * const reason) {
-    fprintf(stderr, C_GREEN"[MEM]"C_YELLOW" %s:"C_RESET" %p (%s)\n", type, ptr, reason);
-}
+#define C_MEM   C_GREEN
+#define C_ALLOC C_YELLOW
+#define C_FREE  C_BLUE
 
-void _arena_mem_dbg_free(void const * const ptr, const char * const reason) {
-    fprintf(stderr, C_GREEN"[MEM]"C_BLUE" free:"C_RESET" %p (%s)\n", ptr, reason);
-}
+#define _arena_mem_dbg_alloc(type, ptr, reason) do {\
+    fprintf(stderr, C_MEM"[MEM]"C_ALLOC" %s:"C_RESET" %p (%s)\n", type, ptr, reason); \
+} while(0)
+
+#define _arena_mem_dbg_free(ptr, reason) do {\
+    fprintf(stderr, C_MEM"[MEM]"C_FREE" free:"C_RESET" %p (%s)\n", ptr, reason);\
+} while(0)
 
 #else
 #define _arena_mem_dbg_alloc(type, ptr, rsn) do {} while (0)
