@@ -121,6 +121,15 @@ int main() {
         assert( arena_get_size(a) == 5+3+1 );
         #endif
 
+        // Pop
+        arena_pop(a);
+
+        assert( a->head->ptr        == p3 );
+        assert( a->head->size       == 3  );
+        assert( a->head->next->ptr  == p1 );
+        assert( a->head->next->size == 5  );
+        assert( a->head->next->next == NULL );
+
         nfree_arena(a);
     } /*}}}*/
     #endif

@@ -42,6 +42,9 @@ void* arena_xalloc0(Arena * const ap, size_t size);
 
 
 #ifdef ARENA_EXTRA
+void arena_pop(Arena * const ap);
+#define arena_npop(ptr) do { arena_pop(ptr); ptr = NULL; } while (0)
+
 size_t arena_get_size(Arena const * const ap);
 size_t arena_get_buffer_size(Arena const * const ap, void const * const ptr);
 
