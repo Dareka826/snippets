@@ -14,7 +14,7 @@ memc* memc_alloc(size_t size);
 memc* memc_alloc0(size_t size);
 
 void memc_free(memc * const mp);
-#define memc_nfree(ptr) do { memc_free(ptr); ptr = NULL; } while(0);
+#define memc_nfree(ptr) do { memc_free(ptr); ptr = NULL; } while (0)
 
 void memc_bounds_check(memc const * const mp, size_t i);
 

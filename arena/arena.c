@@ -19,8 +19,8 @@ void _arena_mem_dbg_free(void const * const ptr) {
 }
 
 #else
-#define _arena_mem_dbg_alloc(type, ptr) do {} while (0);
-#define _arena_mem_dbg_free(ptr) do {} while (0);
+#define _arena_mem_dbg_alloc(type, ptr) do {} while (0)
+#define _arena_mem_dbg_free(ptr) do {} while (0)
 // }}}
 #endif
 
