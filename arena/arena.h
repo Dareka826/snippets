@@ -26,12 +26,8 @@ struct Arena {
 
 
 // Init / Destroy
-Arena* create_arena();
-#if defined(ARENA_MEM_DBG) && defined(ARENA_DBG_NAME)
 Arena* create_arenan(const char * const name);
-#else
-#define create_arenan(name) create_arena()
-#endif
+#define create_arena() create_arenan(NULL)
 
 void free_arena(Arena * const ap);
 #define nfree_arena(ptr) do { free_arena(ptr); ptr = NULL; } while (0)

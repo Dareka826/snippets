@@ -48,28 +48,21 @@
 #endif
 
 // Init / Deinit {{{
-Arena* create_arena() { /*{{{*/
-    Arena * const ap = malloc(sizeof(Arena));
-    memset(ap, 0, sizeof(Arena));
-
-    _arena_mem_dbg_alloc("malloc", ap, "arena init");
-
-    return ap;
-} /*}}}*/
-
-#if defined(ARENA_MEM_DBG) && defined(ARENA_DBG_NAME)
 Arena* create_arenan(const char * const name) { /*{{{*/
     Arena * const ap = malloc(sizeof(Arena));
     memset(ap, 0, sizeof(Arena));
 
+    #if defined(ARENA_MEM_DBG) && defined(ARENA_DBG_NAME)
     if (name != NULL)
         ap->name = name;
+    #endif
+    // Hack to avoid -Wunused-parameter (should be optimized out)
+    do { } while (0 && (name != NULL));
 
     _arena_mem_dbg_alloc("malloc", ap, "arena init");
 
     return ap;
 } /*}}}*/
-#endif
 
 void free_arena(Arena * const ap) { /*{{{*/
     struct ArenaBuf
