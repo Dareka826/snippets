@@ -1,5 +1,6 @@
 #include "memchunk.h"
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 
 memc* memc_alloc(size_t size) {
