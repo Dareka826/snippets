@@ -150,6 +150,7 @@ void* arena_xalloc0(Arena * const ap, size_t size) { /*{{{*/
 
 #ifdef ARENA_EXTRA
 // Extra functions {{{
+#ifdef ARENA_UNSAFE
 void arena_mid_free(Arena * const ap, void * const ptr) { /*{{{*/
     struct ArenaBuf
         *head = ap->head,
@@ -176,6 +177,7 @@ void arena_mid_free(Arena * const ap, void * const ptr) { /*{{{*/
         head = head->next;
     }
 } /*}}}*/
+#endif
 
 size_t arena_get_size(Arena const * const ap) { /*{{{*/
     struct ArenaBuf const *head = ap->head;

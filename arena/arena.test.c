@@ -93,6 +93,7 @@ int main() {
         assert( arena_get_buffer_size(a, p1) == 5 );
         // }}}
 
+        #ifdef ARENA_UNSAFE
         // Mid-free {{{
         assert( a->head->ptr                     == p4 );
         assert( a->head->size                    == 1  );
@@ -118,6 +119,7 @@ int main() {
 
         // Size after mid-free
         assert( arena_get_size(a) == 5+3+1 );
+        #endif
 
         nfree_arena(a);
     } /*}}}*/
