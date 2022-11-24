@@ -53,8 +53,8 @@ int main() {
 
         u8 *p3 = arena_xalloc(a, 8);
         assert( p3 != NULL );
-        p3[0]  = 0xBB;
-        assert( p3[0]  == 0xBB );
+        p3[0] = 0xBB;
+        assert( p3[0] == 0xBB );
         p3[7] = 0x6F;
         assert( p3[7] == 0x6F );
 
@@ -87,10 +87,10 @@ int main() {
         // Size {{{
         assert( arena_get_size(a) == 5+7+3+1 );
 
-        assert( a->head->size                   == 1  );
-        assert( a->head->next->size             == 3  );
-        assert( a->head->next->next->size       == 7  );
-        assert( a->head->next->next->next->size == 5  );
+        assert( a->head->size                   == 1 );
+        assert( a->head->next->size             == 3 );
+        assert( a->head->next->next->size       == 7 );
+        assert( a->head->next->next->next->size == 5 );
 
         assert( arena_get_buffer_size(a, p4) == 1 );
         assert( arena_get_buffer_size(a, p3) == 3 );
